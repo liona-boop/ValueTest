@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>价值观罗盘 · 20 题自我探索</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --ink:#22221E;
+  --ink-soft:#5C5B54;
+  --ink-faint:#8B897F;
+  --paper:#F4F1E8;
+  --paper-2:#FBF9F3;
+  --line:rgba(34,34,30,.12);
+  --line-soft:rgba(34,34,30,.07);
+  --accent:#B4552F;
+  --serif:"Noto Serif SC","Songti SC","Source Han Serif SC",serif;
+  --sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:400;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+}
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background:
+    radial-gradient(1100px 700px at 8% -10%, rgba(180,85,47,.09), transparent 62%),
+    radial-gradient(900px 620px at 100% 0%, rgba(47,107,90,.10), transparent 58%),
+    radial-gradient(700px 700px at 50% 120%, rgba(90,92,140,.08), transparent 60%);
+  pointer-events:none;z-index:0;
+}
+main{position:relative;z-index:1}
+.wrap{width:100%;max-width:760px;margin:0 auto;padding:0 22px}
+
+/* ---------- 视图切换 ---------- */
+.view{display:none}
+.view.is-active{display:block;animation:viewIn .5s cubic-bezier(.22,.61,.36,1) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- 开场 ---------- */
+.intro{padding:clamp(56px,11vh,120px) 0 clamp(40px,7vh,80px)}
+.eyebrow{
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:500;margin:0 0 22px;
+}
+h1.title{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(34px,6.4vw,54px);line-height:1.28;letter-spacing:.01em;
+  margin:0 0 24px;
+}
+h1.title em{font-style:normal;color:var(--accent);}
+.lead{
+  font-size:15.5px;line-height:1.95;color:var(--ink-soft);max-width:35em;margin:0 0 26px;
+}
+.dims-row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 34px}
+.dim-chip{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12.5px;color:var(--ink-soft);
+  padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(251,249,243,.6);
+}
+.dot{width:7px;height:7px;border-radius:50%;flex:none}
+.meta{font-size:12.5px;color:var(--ink-faint);letter-spacing:.06em;margin:0 0 30px}
+.cta-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.btn{
+  font-family:var(--sans);font-size:15px;font-weight:500;
+  border:none;cursor:pointer;border-radius:999px;
+  padding:15px 30px;transition:transform .25s,box-shadow .25s,background .25s,color .25s;
+  display:inline-flex;align-items:center;gap:10px;
+}
+.btn-primary{background:var(--ink);color:#FBF9F3;box-shadow:0 8px 24px -12px rgba(34,34,30,.6)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(34,34,30,.55)}
+.btn-primary:active{transform:translateY(0)}
+.btn-ghost{background:transparent;color:var(--ink-soft);border:1px solid var(--line);padding:13px 24px;font-size:14px}
+.btn-ghost:hover{color:var(--ink);border-color:rgba(34,34,30,.3)}
+.fine{font-size:12px;color:var(--ink-faint);margin:18px 0 0;letter-spacing:.02em}
+.intro-art{
+  margin:44px 0 0;display:flex;align-items:flex-end;gap:6px;height:56px;opacity:.9;
+}
+.intro-art i{display:block;width:100%;border-radius:3px 3px 0 0;transform-origin:bottom;animation:rise 1s cubic-bezier(.22,.61,.36,1) both}
+@keyframes rise{from{transform:scaleY(.1);opacity:0}to{transform:scaleY(1);opacity:1}}
+
+/* ---------- 答题 ---------- */
+.quiz{padding:0 0 70px;min-height:100vh;display:flex;flex-direction:column}
+.quizbar{
+  position:sticky;top:0;z-index:5;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:18px 0 14px;background:linear-gradient(to bottom, var(--paper) 62%, rgba(244,241,232,0));
+}
+.bar-left{display:flex;align-items:center;gap:14px}
+.back-btn{
+  width:38px;height:38px;border-radius:50%;border:1px solid var(--line);
+  background:rgba(251,249,243,.7);color:var(--ink-soft);cursor:pointer;
+  font-size:15px;display:flex;align-items:center;justify-content:center;
+  transition:.2s;
+}
+.back-btn:hover{color:var(--ink);border-color:rgba(34,34,30,.3)}
+.counter{font-size:12.5px;letter-spacing:.14em;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.counter b{color:var(--ink);font-weight:600;font-size:15px;font-family:var(--serif)}
+.track{width:100%;height:2px;background:var(--line-soft);border-radius:2px;overflow:hidden;margin-bottom:clamp(34px,6vh,58px)}
+.track i{display:block;height:100%;width:0;background:var(--accent);border-radius:2px;transition:width .5s cubic-bezier(.22,.61,.36,1)}
+.quizbody{flex:1}
+.qindex{font-size:11.5px;letter-spacing:.26em;color:var(--accent);text-transform:uppercase;margin:0 0 16px;font-weight:500}
+.qtext{
+  font-family:var(--serif);font-weight:600;font-size:clamp(21px,3.9vw,28px);
+  line-height:1.55;margin:0 0 clamp(26px,4vh,38px);letter-spacing:.01em;max-width:24em;
+}
+.opts{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.opt{
+  width:100%;text-align:left;cursor:pointer;
+  display:flex;align-items:flex-start;gap:16px;
+  padding:18px 20px;border-radius:14px;
+  background:rgba(251,249,243,.82);
+  border:1px solid var(--line);
+  font-family:var(--sans);font-size:15px;line-height:1.65;color:var(--ink);
+  transition:border-color .22s,background .22s,transform .22s,box-shadow .22s;
+  animation:optIn .45s cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes optIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.opt:hover{border-color:rgba(34,34,30,.28);transform:translateX(3px);box-shadow:0 10px 26px -20px rgba(34,34,30,.7)}
+.opt .letter{
+  flex:none;width:24px;height:24px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--serif);font-size:12.5px;color:var(--ink-faint);
+  border:1px solid var(--line);margin-top:1px;transition:.22s;
+}
+.opt.is-picked{border-color:var(--ink);background:var(--ink);color:#FBF9F3}
+.opt.is-picked .letter{color:#FBF9F3;border-color:rgba(251,249,243,.4)}
+.opt.is-picked:hover{transform:none}
+.quiz-foot{margin-top:26px;font-size:11.5px;letter-spacing:.1em;color:var(--ink-faint);display:flex;justify-content:space-between;gap:16px}
+.kbd-hint{opacity:.8}
+
+/* ---------- 结果 ---------- */
+.result{padding:clamp(34px,6vh,58px) 0 80px}
+.res-head{margin-bottom:clamp(34px,6vh,50px)}
+.res-head .eyebrow{margin-bottom:18px;color:var(--accent)}
+h1.res-title{
+  font-family:var(--serif);font-weight:600;
+  font-size:clamp(30px,5.6vw,46px);line-height:1.3;margin:0 0 18px;
+}
+h1.res-title span{color:var(--ink-faint);font-size:.62em;font-weight:400;display:block;margin-top:10px;letter-spacing:.02em}
+.res-quote{
+  font-family:var(--serif);font-size:17px;line-height:1.9;color:var(--ink);
+  border-left:2px solid var(--accent);padding-left:16px;margin:26px 0 20px;
+}
+.res-desc{font-size:14.5px;color:var(--ink-soft);line-height:1.9;margin:0;max-width:36em}
+
+.card{
+  background:rgba(251,249,243,.86);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:clamp(22px,4vw,32px);
+  margin-bottom:22px;
+}
+.card-label{
+  font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);
+  margin:0 0 18px;font-weight:500;display:flex;align-items:center;gap:10px;
+}
+.card-label::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+
+/* 图表 */
+.chart-wrap{display:flex;align-items:center;gap:clamp(18px,4vw,40px);flex-wrap:wrap}
+.donut{position:relative;width:196px;height:196px;flex:none;margin:0 auto}
+.donut svg{width:100%;height:100%;display:block}
+.donut-center{
+  position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+}
+.donut-center .big{font-family:var(--serif);font-size:29px;font-weight:600;line-height:1;color:var(--ink)}
+.donut-center .small{font-size:11px;letter-spacing:.14em;color:var(--ink-faint)}
+.legend{flex:1;min-width:230px;display:flex;flex-direction:column;gap:13px}
+.legend-row{display:block}
+.legend-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:5px}
+.legend-name{font-size:13.5px;color:var(--ink);display:flex;align-items:center;gap:8px}
+.legend-pct{font-family:var(--serif);font-size:14px;color:var(--ink-soft);font-variant-numeric:tabular-nums}
+.legend-bar{height:4px;border-radius:4px;background:var(--line-soft);overflow:hidden}
+.legend-bar i{display:block;height:100%;width:0;border-radius:4px;transition:width 1s cubic-bezier(.22,.61,.36,1)}
+.legend-row.is-top .legend-name{font-weight:600}
+.legend-row.is-low .legend-name{color:var(--ink-faint)}
+
+/* 建议 */
+.advice{display:flex;flex-direction:column;gap:0}
+.advice-item{display:flex;gap:16px;padding:20px 0;border-top:1px solid var(--line-soft)}
+.advice-item:first-child{border-top:none;padding-top:4px}
+.advice-item:last-child{padding-bottom:2px}
+.num{
+  font-family:var(--serif);font-size:13px;color:var(--accent);
+  flex:none;width:26px;height:26px;border-radius:50%;border:1px solid rgba(180,85,47,.35);
+  display:flex;align-items:center;justify-content:center;margin-top:2px;
+}
+.advice-text h4{margin:0 0 6px;font-size:14.5px;font-weight:600;letter-spacing:.01em}
+.advice-text p{margin:0;font-size:14px;line-height:1.85;color:var(--ink-soft)}
+.advice-tag{font-size:11px;color:var(--ink-faint);letter-spacing:.08em;border:1px solid var(--line);border-radius:999px;padding:2px 9px;display:inline-block;margin-left:8px;vertical-align:1px}
+
+/* 人生形态 */
+.life-title{font-family:var(--serif);font-size:clamp(20px,3.4vw,24px);font-weight:600;margin:0 0 14px;line-height:1.5}
+.life-text{font-size:15px;line-height:2;color:var(--ink-soft);margin:0}
+.blend{display:block;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:13.5px;line-height:1.9;color:var(--ink-faint)}
+.blend b{color:var(--ink);font-weight:500}
+.tension{
+  margin-top:18px;padding:16px 18px;border-radius:12px;
+  background:rgba(180,85,47,.06);border:1px solid rgba(180,85,47,.16);
+  font-size:13.5px;line-height:1.85;color:#7A3E26;
+}
+.tension strong{font-weight:600;display:block;margin-bottom:4px;font-size:12.5px;letter-spacing:.06em}
+
+.result-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px;align-items:center}
+.toast{
+  position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);
+  background:var(--ink);color:#FBF9F3;font-size:13px;padding:10px 18px;border-radius:999px;
+  opacity:0;pointer-events:none;transition:.3s;z-index:20;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.foot-note{font-size:11.5px;color:var(--ink-faint);letter-spacing:.04em;margin-top:28px;line-height:1.9}
+
+@media (max-width:560px){
+  .donut{width:168px;height:168px}
+  .opt{font-size:14.5px;padding:16px 16px;gap:12px}
+  .res-quote{font-size:16px}
+  .dims-row{gap:6px}
+  .dim-chip{font-size:11.5px;padding:5px 10px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+
+<main>
+
+  <!-- ===================== 视图 1：开场 ===================== -->
+  <section id="view-intro" class="view is-active">
+    <div class="wrap intro">
+      <p class="eyebrow">Self Discovery · 自我探索</p>
+      <h1 class="title">你的价值观，<br><em>给了你3条建议</em>
+      <p class="lead">20 道选择题，从六个方向辨认你真正在意的东西。没有标准答案，也不用想「应该选哪个」——选那个更像你的。做完你会得到：一张价值观占比图、三条做选择的依据，以及一种更适合你的活法。</p>
+
+      <div class="dims-row" id="dimChips"></div>
+      <div class="meta">20 题 · 约 6 分钟 · 单选 · 无标准答案</div>
+      <div class="cta-row">
+        <button class="btn btn-primary" id="startBtn">开始探索 <span aria-hidden="true">→</span></button>
+      </div>
+    
+      <div class="intro-art" aria-hidden="true">
+        <i style="height:38%;background:#2F6B5A"></i>
+        <i style="height:62%;background:#B4552F"></i>
+        <i style="height:50%;background:#8C5A6B"></i>
+        <i style="height:78%;background:#2E6280"></i>
+        <i style="height:44%;background:#8A7A46"></i>
+        <i style="height:56%;background:#5A5C8C"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 视图 2：答题 ===================== -->
+  <section id="view-quiz" class="view">
+    <div class="wrap quiz">
+      <div class="quizbar">
+        <div class="bar-left">
+          <button class="back-btn" id="backBtn" aria-label="上一题">←</button>
+          <div class="counter"><b id="qNow">01</b> / 20</div>
+        </div>
+        <div class="counter" id="qTip">选最像你的那个</div>
+      </div>
+      <div class="track"><i id="trackBar"></i></div>
+
+      <div class="quizbody">
+        <p class="qindex" id="qIndex">问题 01</p>
+        <h2 class="qtext" id="qText"></h2>
+        <ul class="opts" id="qOpts"></ul>
+        <div class="quiz-foot">
+          <span class="kbd-hint">键盘 1–4 或 A–D 也可以选</span>
+          <span id="answeredHint"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 视图 3：结果 ===================== -->
+  <section id="view-result" class="view">
+    <div class="wrap result">
+
+      <div class="res-head">
+        <p class="eyebrow">Your Values · 你的价值观图谱</p>
+        <h1 class="res-title" id="resTitle"></h1>
+        <p class="res-desc" id="resDesc"></p>
+        <blockquote class="res-quote" id="resQuote"></blockquote>
+      </div>
+
+      <div class="card">
+        <p class="card-label">价值观占比</p>
+        <div class="chart-wrap">
+          <div class="donut">
+            <svg id="donutSvg" viewBox="0 0 200 200" role="img" aria-label="价值观占比环形图"></svg>
+            <div class="donut-center">
+              <span class="big" id="donutBig">—</span>
+              <span class="small">主导价值</span>
+            </div>
+          </div>
+          <div class="legend" id="legend"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <p class="card-label">做选择时的三条依据</p>
+        <div class="advice" id="adviceList"></div>
+      </div>
+
+      <div class="card">
+        <p class="card-label">更适合你的人生形态</p>
+        <h3 class="life-title" id="lifeTitle"></h3>
+        <p class="life-text" id="lifeText"></p>
+        <div class="tension" id="tensionBox" hidden></div>
+      </div>
+
+      <div class="result-actions">
+        <button class="btn btn-primary" id="retestBtn">重新测一次</button>
+        <button class="btn btn-ghost" id="copyBtn">复制文字版</button>
+      </div>
+      <p class="foot-note">这份报告描述的是「你此刻更在意什么」，不是给你贴标签。人在不同阶段配比会变，过半年再测一次，对比着看更有意思。</p>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast">已复制</div>
+
+<script>
+/* =======================================================================
+   维度定义
+   ======================================================================= */
+const ORDER = ['A','B','C','D','E','F'];
+
+const DIMS = {
+  A: {
+    name:'成长与探索', short:'成长', color:'#2F6B5A',
+    tagline:'你相信人生的答案，在「还没会的」那一部分里。',
+    desc:'你被「还没会的东西」天然吸引，停滞比失败更让你难受。你把人生当成一个可以不断升级的过程，而不是一份需要守住的资产。',
+    drive:'对「还没成为的自己」的好奇',
+    lifeTitle:'一条不断换挡的路',
+    lifeDesc:'你适合把人生拆成几个两三年的阶段，每一段都攻下一个明确的难题：先进入能快速学到东西的场域，再换一次难度。给你反馈、给你难题、允许你试错的地方，比一开始就最安稳的工作更能让你活起来。理想的状态是，无论多大年纪，手里都有一件「正在学」的事——它不一定赚钱，但让你一直有下一站。',
+    advice1:'把「一年后我会多会什么」当成第一道筛子。两个选项差不多时，选那个能让你碰到新难题、且失败成本可控的。对你来说，停滞的代价永远比试错高。',
+    advice2:'别只看机会大小，看这里给不给你反馈。成长型的人最怕「没人告诉你做得对不对」，选能给真话、肯给难题、允许你重来的团队，比选一个光鲜的 title 重要。',
+hedge:'你对「变得更强」不太上心，容易在环境一变时拿不出可迁移的能力。补法：每年给自己安排一件「必须学会新东西」的任务，把学习做成固定动作，而不是等有灵感。'
+  },
+  B: {
+    name:'成就与影响', short:'成就', color:'#B4552F',
+    tagline:'你要的不是「更好」，是「做成了」。',
+    desc:'你用结果确认自己的价值，长期没有回响的努力比辛苦本身更难忍。你愿意为目标承受强度，也自然想站到能决定事情的位置上。',
+    drive:'对「做出结果」的渴望',
+    lifeTitle:'以作品为单位的人生',
+    lifeDesc:'你适合目标足够大、评价足够清楚的环境：创业、专业深耕、带团队，或做一门自己的生意。给你自主权、让结果和回报直接挂钩，比给你安稳更能激发你。你需要可以拿出去的里程碑，而不是模糊的努力。但也要记得在生活里留出不产出、不优化、只属于你的时间——不然你会把自己也变成一个项目。',
+    advice1:'把大目标切成本季度能交付的作品。你的动力来自看得见的进展，与其许年度大愿，不如每 90 天做出一个能拿出去给别人看的东西。',
+    advice2:'选平台时，除了看机会，更要看这里的人值不值得长期共事、结果是不是真的和回报挂钩。你的上限很大程度取决于身边的人，而不只取决于起点。',
+hedge:'你可能不太在乎「做出结果」，容易长期停在准备阶段。补法：每季度逼自己交付一件能被别人看见的东西，用外部的截止日期对抗完美主义。'
+  },
+  C: {
+    name:'联结与归属', short:'联结', color:'#8C5A6B',
+    tagline:'在你的坐标系里，人比事更重。',
+    desc:'你通过关系确认自己在世界上的位置，判断一件事对不对，先看它对身边的人意味着什么。你愿意为关系让渡一部分效率和自我。',
+    drive:'对「被需要、被理解」的需要',
+    lifeTitle:'密度很高的生活',
+    lifeDesc:'你适合生活半径不大、但密度很高的过法：一座能长住的城市，几个能半夜打电话的人，一份下班后还有力气做饭的工作。你在「人只是资源」的环境里待不久，那会一点点把你耗干。你真正稀缺的不是机会，是可以长期相处的人，所以别为了一个更好的 title 反复离开已经长好的关系网。',
+    advice1:'做决定前先算「关系账」：搬家、跳槽、换城市，会变薄哪几段关系？如果代价超过三段核心关系，要么补偿，要么放弃。',
+    advice2:'把「谁在这里」排在「这里有多好」之前。你适合人靠谱、氛围稳定的地方，一份高薪但人际冷漠的工作会慢慢把你耗干。',
+hedge:'你可能不太依赖关系，容易在真正需要人时才发现身边没人。补法：主动维护 3–5 段不谈利益的关系，每季度至少见一次面。'
+  },
+  D: {
+    name:'自由与自主', short:'自由', color:'#2E6280',
+    tagline:'你要的是「自己说了算」。',
+    desc:'你对被安排、被定义、被要求特别敏感。同样是辛苦，为自己选的路你能扛很久，被别人派的路你一天都难撑。你把真实看得比体面重。',
+    drive:'对「自己说了算」的坚持',
+    lifeTitle:'自己说了算的日子',
+    lifeDesc:'你适合规则由自己定的事：自由职业、小而美的生意、项目制工作、独立岗位，而不是层级密集、事事报批的组织。你的生活质量取决于「可退出性」——手里有一笔钱、一项能独立变现的技能，你才活得舒展。同样辛苦，为自己选的路你能扛很久；被派的路，你一天都难撑。',
+    advice1:'优先看控制权，而不是最优解。同样的收入，选那个你能自己决定怎么做、什么时候做、和谁做的。自主被剥夺对你的损耗，远大于少拿一点钱。',
+    advice2:'自由最大的敌人是没结构。给自己找一个外部约束：固定交付日、固定合作对象、固定复盘节奏，别让自由慢慢变成散。',
+hedge:'你习惯先把别人的期待和规则排在前面，自己的意愿总在最后一位。补法：每周留一段不解释、不汇报的时间，从小事上练习拒绝。'
+  },
+  E: {
+    name:'安稳与秩序', short:'安稳', color:'#8A7A46',
+    tagline:'你要的日子是：在我手里，不会失控。',
+    desc:'你重视确定性、健康和边界，宁可慢一点也要走得久。你的安全感来自准备，而不是运气。',
+    drive:'对「不失控」的在意',
+    lifeTitle:'一年比一年更稳',
+    lifeDesc:'你适合有台阶、能积累的路径：专业岗位、成熟行业里的深耕、有秩序的组织。你要的不是刺激，是「一年比一年更稳」。你的幸福感很大一部分来自可预期：固定的作息、几个老朋友、一笔看得见的存款。你不是不敢冒险，只是不愿把生活押在一次赌博上——把风险控制在能承受的范围内，你反而敢走得更远。',
+    advice1:'把「最坏情况我扛不扛得住」当决策门槛。扛得住就放手做，扛不住就降规模或换方案——这是你的安全阀，不是保守。',
+    advice2:'选有积累、有台阶的路径，别选靠一次爆发定输赢的。你需要的是复利，而不是赔率。',
+hedge:'你对「别失控」不太上心，容易把身体和现金流押在一次冲刺上。补法：先攒出 6 个月应急金、把作息固定下来，让底线成为常量。'
+  },
+  F: {
+    name:'意义与利他', short:'意义', color:'#5A5C8C',
+    tagline:'你给事情定价的方式，是「它值不值得」。',
+    desc:'你用「对谁有用」给事情定价，收入和名头对你来说是条件，不是答案。你容易为一件「应该有人做」的事多付一些。',
+    drive:'对「这件事值不值得」的追问',
+    lifeTitle:'为具体的人做点事',
+    lifeDesc:'你适合能直接看到受益者的工作：教育、医疗、公益、内容、公共服务，或任何「我帮到了谁」很具体的位置。抽象的宏大叙事撑不了你太久，一个真实的人的眼神可以。你需要给自己配一副现实的手脚：稳定的收入、够用的体力、可持续的节奏。帮得久，比帮得猛更重要。',
+    advice1:'决策时先问「受益者是谁、帮到什么程度」。具体的对象能撑住你，抽象的口号不能。',
+    advice2:'把可持续性一起算进去：体力、收入、时间都要能撑到这件事的第二年。帮不动自己的帮助，不算帮助。',
+hedge:'你可能更在意效率和结果，时间久了会空。补法：定期问「这件事除了让我赢，还让谁受益」，并真的做一件对具体的人有用的事。'
+  }
+};
+
+/* =======================================================================
+   20 道题：每题 4 个选项，每个选项给 1–2 个维度加权
+   ======================================================================= */
+const QUESTIONS = [
+  { text:'周五晚上突然空出一整晚，没人打扰，你最想做的第一件事是：', options:[
+    { t:'打开一直没看完的课程或书，学点新东西', w:{A:2,D:1} },
+    { t:'把手上那件事再推进一点，做出看得见的成果', w:{B:2,A:1} },
+    { t:'约上一个很久没见的朋友，一直聊到深夜', w:{C:2,D:1} },
+    { t:'什么都不计划，随心走到哪儿算哪儿', w:{D:2,A:1} }
+  ]},
+  { text:'一笔意外的钱到账，你的第一反应是：', options:[
+    { t:'先存起来或补上保障，让心里踏实', w:{E:2,C:1} },
+    { t:'拿一部分去做一件对别人有用的事', w:{F:2,A:1} },
+    { t:'报个课、买套装备，投资自己的能力', w:{A:2,B:1} },
+    { t:'投到一个能滚起来的地方，让它变大', w:{B:2,E:1} }
+  ]},
+  { text:'一段关系让你越来越累，你更可能的做法是：', options:[
+    { t:'先想办法修，因为这段关系本身值得', w:{C:2,E:1} },
+    { t:'坦白说清楚，哪怕因此结束', w:{D:2,A:1} },
+    { t:'慢慢拉开距离，保持体面与稳定', w:{E:2,C:1} },
+    { t:'问自己还能为对方做点什么，做到问心无愧', w:{F:2,C:1} }
+  ]},
+  { text:'别人夸你，哪一句最让你真的高兴？', options:[
+    { t:'「你比一年前厉害太多了」', w:{A:2,B:1} },
+    { t:'「这件事没有你成不了」', w:{B:2,C:1} },
+    { t:'「跟你在一起很安心」', w:{C:2,E:1} },
+    { t:'「你活得很像你自己」', w:{D:2,A:1} }
+  ]},
+  { text:'面对一份薪水更高、但要长期加班的工作，你首先想到：', options:[
+    { t:'身体和生活节奏会被打乱，这个代价我付不起', w:{E:2,C:1} },
+    { t:'这份工作有没有让我觉得值得的意义', w:{F:2,A:1} },
+    { t:'能学到多少、三年后我会变成谁', w:{A:2,B:1} },
+    { t:'这是不是一个更大的平台和机会', w:{B:2,A:1} }
+  ]},
+  { text:'「理想的一天」最接近哪一种？', options:[
+    { t:'和喜欢的人一起做事、一起吃饭，热热闹闹', w:{C:2,E:1} },
+    { t:'完全按自己的节奏，想停就停', w:{D:2,A:1} },
+    { t:'一切按计划推进，没有意外', w:{E:2,B:1} },
+    { t:'帮到了某个人，或做成了一件有分量的事', w:{F:2,C:1} }
+  ]},
+  { text:'你更容易因为什么而焦虑？', options:[
+    { t:'发现自己很久没有进步', w:{A:2,E:1} },
+    { t:'努力了却没有结果、没被看见', w:{B:2,F:1} },
+    { t:'和重要的人疏远、失去连接', w:{C:2,E:1} },
+    { t:'被安排、被要求，没有选择余地', w:{D:2,A:1} }
+  ]},
+  { text:'如果只能保住一样东西，你会选：', options:[
+    { t:'稳定的收入与可预期的生活', w:{E:2,B:1} },
+    { t:'做的事对别人有意义', w:{F:2,C:1} },
+    { t:'持续学习和尝试的机会', w:{A:2,D:1} },
+    { t:'一个能不断做大的事业', w:{B:2,E:1} }
+  ]},
+  { text:'团队里出现明显分歧，你通常会：', options:[
+    { t:'先照顾大家的情绪，别让关系出裂痕', w:{C:2,F:1} },
+    { t:'直接说自己的判断，不合就退出', w:{D:2,B:1} },
+    { t:'按既定规则和流程来，别乱', w:{E:2,C:1} },
+    { t:'看哪个方案对最终受影响的那些人更好', w:{F:2,E:1} }
+  ]},
+  { text:'刷到一条陌生的活动或招募信息，你会：', options:[
+    { t:'立刻研究细节，可能就报名了', w:{A:2,D:1} },
+    { t:'先想它能不能帮我积累点什么', w:{B:2,A:1} },
+    { t:'看有没有认识的人一起去', w:{C:2,D:1} },
+    { t:'光是想想要去一个全新的地方就兴奋', w:{D:2,A:1} }
+  ]},
+  { text:'你心里「过得好」的画面，更接近：', options:[
+    { t:'有房有存款，家人健康，日子平稳', w:{E:2,C:1} },
+    { t:'做的事被人记住，帮到了一些人', w:{F:2,B:1} },
+    { t:'一直在变成更好的自己', w:{A:2,D:1} },
+    { t:'做成了一件自己都没想到能做成的事', w:{B:2,F:1} }
+  ]},
+  { text:'朋友临时把计划改了三次，你的真实感受是：', options:[
+    { t:'只要还能见到人，改就改吧', w:{C:2,D:1} },
+    { t:'正好，我也不想被计划绑住', w:{D:2,A:1} },
+    { t:'有点烦，被打乱的安排让我不安', w:{E:2,C:1} },
+    { t:'会先想他是不是遇到什么难处', w:{F:2,C:1} }
+  ]},
+  { text:'你更愿意把时间花在：', options:[
+    { t:'学一个暂时还用不上的东西', w:{A:2,D:1} },
+    { t:'打磨一个能拿得出手的作品', w:{B:2,A:1} },
+    { t:'经营几段真正深的关系', w:{C:2,E:1} },
+    { t:'一场说走就走的旅行或全新体验', w:{D:2,C:1} }
+  ]},
+  { text:'遇到一件不公平的事，但和你无关，你会：', options:[
+    { t:'先保护好自己，不轻易卷入', w:{E:2,C:1} },
+    { t:'站出来，哪怕要付代价', w:{F:2,D:1} },
+    { t:'先搞清楚背后的机制到底是怎么回事', w:{A:2,F:1} },
+    { t:'想办法把资源和声音组织起来去改变它', w:{B:2,F:1} }
+  ]},
+  { text:'深夜独处时，你最容易想到的是：', options:[
+    { t:'那些我在乎的人现在过得怎么样', w:{C:2,F:1} },
+    { t:'我是不是活成了别人期待的样子', w:{D:2,A:1} },
+    { t:'明天要做的事、还没解决的问题', w:{E:2,B:1} },
+    { t:'我这辈子到底留下了什么', w:{F:2,A:1} }
+  ]},
+  { text:'你更容易被哪种人吸引？', options:[
+    { t:'一直在自我更新、眼里有好奇的人', w:{A:2,D:1} },
+    { t:'目标清楚、能把事做成的人', w:{B:2,A:1} },
+    { t:'温和、会认真听你说话的人', w:{C:2,E:1} },
+    { t:'不太在意别人眼光、活得很自在的人', w:{D:2,A:1} }
+  ]},
+  { text:'做一个重大决定之前，你最想先确认的是：', options:[
+    { t:'最坏的情况我能不能扛住', w:{E:2,B:1} },
+    { t:'这件事对不对得起我的良心', w:{F:2,C:1} },
+    { t:'我能从中学到什么、会不会打开新可能', w:{A:2,D:1} },
+    { t:'投入产出比、到底值不值得', w:{B:2,E:1} }
+  ]},
+  { text:'如果没有任何人会知道你的选择，你会更倾向于：', options:[
+    { t:'依然优先照顾身边的人', w:{C:2,F:1} },
+    { t:'完全按自己的想法来', w:{D:2,A:1} },
+    { t:'依然按规矩和稳妥的方式办', w:{E:2,C:1} },
+    { t:'依然去做那件「应该有人做」的事', w:{F:2,B:1} }
+  ]},
+  { text:'你手机里最舍不得删的那类内容：', options:[
+    { t:'收藏的课程、笔记、书单', w:{A:2,E:1} },
+    { t:'自己做过的项目、作品、成果记录', w:{B:2,A:1} },
+    { t:'和某些人的聊天记录、合照', w:{C:2,D:1} },
+    { t:'旅行照片、临时起意的那些瞬间', w:{D:2,C:1} }
+  ]},
+  { text:'十年后的你，最不希望自己变成：', options:[
+    { t:'生活一团乱、身体垮掉，到处漂着', w:{E:2,C:1} },
+    { t:'变得麻木，对别人的处境毫无感觉', w:{F:2,C:1} },
+    { t:'停止生长，只会重复以前的自己', w:{A:2,D:1} },
+    { t:'什么也没做成，被所有人遗忘', w:{B:2,F:1} }
+  ]}
+];
+
+/* 两两之间的张力提醒 */
+const TENSIONS = {
+  'A|E':'你想一直在换，也想一直别出事——这两个念头会互相拖。给「折腾」设一个预算（时间、钱、次数），剩下的交给安稳。',
+  'B|C':'你既想往前冲，也在乎人。冲得太快会欠下关系债，陪得太久会错过窗口。用「这件事值不值得让某个人失望一次」来裁决。',
+  'D|E':'你要随时能走，也要有个窝。解法不是二选一：先把「可退出性」（钱＋技能）攒出来，再谈自由。',
+  'B|F':'你想赢，也想值得。把「值得」具体到受益人，把「赢」具体到指标——两边都能量化的时候，才不打架。',
+  'C|D':'你既不想让关系受伤，也不想委屈自己。练「温和而明确」的拒绝，比忍着或翻脸都更省关系。',
+  'A|F':'你想不断变强，也想做有意义的事。把成长路线挂到一个真实的对象上（帮谁变强），两件事就合并成一件事了。'
+};
+
+/* =======================================================================
+   状态
+   ======================================================================= */
+let answers = new Array(QUESTIONS.length).fill(-1);
+let idx = 0;
+let locked = false;
+let currentView = 'intro';
+
+/* =======================================================================
+   开场：维度小标签
+   ======================================================================= */
+(function initChips(){
+  const box = document.getElementById('dimChips');
+  ORDER.forEach(k=>{
+    const d = DIMS[k];
+    box.insertAdjacentHTML('beforeend',
+      `<span class="dim-chip"><i class="dot" style="background:${d.color}"></i>${d.name}</span>`);
+  });
+  // 装饰柱状图随机错落
+  document.querySelectorAll('.intro-art i').forEach((el,i)=>{
+    el.style.animationDelay = (i*0.07)+'s';
+  });
+})();
+
+/* =======================================================================
+   视图切换
+   ======================================================================= */
+function showView(name){
+  currentView = name;
+  ['intro','quiz','result'].forEach(v=>{
+    document.getElementById('view-'+v).classList.toggle('is-active', v===name);
+  });
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+}
+
+/* =======================================================================
+   答题渲染
+   ======================================================================= */
+const LETTERS = ['A','B','C','D'];
+
+function renderQuiz(){
+  const q = QUESTIONS[idx];
+  document.getElementById('qNow').textContent = String(idx+1).padStart(2,'0');
+  document.getElementById('qIndex').textContent = '问题 ' + String(idx+1).padStart(2,'0');
+  document.getElementById('qText').textContent = q.text;
+  document.getElementById('trackBar').style.width = (idx / QUESTIONS.length * 100) + '%';
+
+  const answered = answers.filter(a=>a>=0).length;
+  document.getElementById('answeredHint').textContent = answered ? `已答 ${answered} 题` : '';
+
+  const list = document.getElementById('qOpts');
+  list.innerHTML = '';
+  q.options.forEach((o,i)=>{
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'opt' + (answers[idx]===i ? ' is-picked' : '');
+    btn.style.animationDelay = (0.05 + i*0.055)+'s';
+    btn.innerHTML = `<span class="letter">${LETTERS[i]}</span><span class="txt">${o.t}</span>`;
+    btn.addEventListener('click', ()=>pick(i));
+    list.appendChild(btn);
+  });
+}
+
+function pick(i){
+  if(locked) return;
+  locked = true;
+  answers[idx] = i;
+
+  const opts = document.querySelectorAll('#qOpts .opt');
+  opts.forEach((el,k)=>el.classList.toggle('is-picked', k===i));
+
+  document.getElementById('trackBar').style.width = ((idx+1) / QUESTIONS.length * 100) + '%';
+
+  setTimeout(()=>{
+    locked = false;
+    if(idx < QUESTIONS.length - 1){
+      idx++;
+      renderQuiz();
+    }else{
+      buildResult();
+      showView('result');
+    }
+  }, 300);
+}
+
+function back(){
+  if(locked) return;
+  if(idx === 0){ showView('intro'); return; }
+  idx--;
+  renderQuiz();
+}
+
+/* =======================================================================
+   计分
+   ======================================================================= */
+function computeResult(){
+  const raw = {}; ORDER.forEach(k=>raw[k]=0);
+  answers.forEach((a,qi)=>{
+    if(a < 0) return;
+    const w = QUESTIONS[qi].options[a].w;
+    for(const k in w) raw[k] += w[k];
+  });
+
+  // 每个维度的「理论可达最高分」：每题取该维度在四个选项里的最大贡献，再求和
+  const max = {}; ORDER.forEach(k=>max[k]=0);
+  QUESTIONS.forEach(q=>{
+    ORDER.forEach(k=>{
+      let m = 0;
+      q.options.forEach(o=>{ if(o.w[k] && o.w[k] > m) m = o.w[k]; });
+      max[k] += m;
+    });
+  });
+
+  const fit = {}; let sum = 0;
+  ORDER.forEach(k=>{
+    fit[k] = max[k] ? raw[k] / max[k] : 0;
+    sum += fit[k];
+  });
+
+  const pct = {}; let roundedSum = 0;
+  ORDER.forEach(k=>{
+    pct[k] = sum ? (fit[k] / sum * 100) : 0;
+    roundedSum += Math.round(pct[k]);
+  });
+
+  const values = ORDER.map(k=>({ key:k, pct:pct[k] }));
+  values.sort((a,b)=> b.pct - a.pct);
+  // 让显示整数加总为 100
+  if(roundedSum !== 100 && values.length){
+    values[0].pct += (100 - roundedSum);
+  }
+
+  return {
+    raw, max, pct,
+    ranked: values,
+    top1: values[0].key,
+    top2: values[1].key,
+    low: values[values.length-1].key
+  };
+}
+
+/* =======================================================================
+   结果渲染
+   ======================================================================= */
+function buildResult(){
+  const r = computeResult();
+  const T1 = DIMS[r.top1], T2 = DIMS[r.top2], LOW = DIMS[r.low];
+
+  // 标题
+  document.getElementById('resTitle').innerHTML =
+    `你是以「${T1.name}」为轴的人<span>${T1.name} ${Math.round(r.pct[r.top1])}% · ${T2.name} ${Math.round(r.pct[r.top2])}% · ${LOW.name} ${Math.round(r.pct[r.low])}%</span>`;
+  document.getElementById('resDesc').textContent = T1.desc;
+  document.getElementById('resQuote').textContent = T1.tagline;
+
+  // 环形图
+  renderDonut(r);
+  document.getElementById('donutBig').textContent = Math.round(r.pct[r.top1]) + '%';
+
+  // 图例
+  const legend = document.getElementById('legend');
+  legend.innerHTML = '';
+  r.ranked.forEach((v,i)=>{
+    const d = DIMS[v.key];
+    const row = document.createElement('div');
+    row.className = 'legend-row' + (i===0 ? ' is-top' : '') + (i===r.ranked.length-1 ? ' is-low' : '');
+    row.innerHTML = `
+      <div class="legend-top">
+        <span class="legend-name"><i class="dot" style="background:${d.color}"></i>${d.name}</span>
+        <span class="legend-pct">${Math.round(v.pct)}%</span>
+      </div>
+      <div class="legend-bar"><i style="background:${d.color}"></i></div>`;
+    legend.appendChild(row);
+    const bar = row.querySelector('.legend-bar i');
+    requestAnimationFrame(()=>{
+      setTimeout(()=>{ bar.style.width = Math.max(2, v.pct) + '%'; }, 80 + i*70);
+    });
+  });
+
+  // 三条建议
+  const advice = [
+    { tag:`来自 ${T1.short}`, title:`用「${T1.short}」当第一筛子`, text:T1.advice1 },
+    { tag:`来自 ${T2.short}`, title:`再用「${T2.short}」做第二道校准`, text:T2.advice2 },
+    { tag:`补足 ${LOW.short}`, title:`补上「${LOW.short}」这一块`, text:LOW.hedge }
+  ];
+  const box = document.getElementById('adviceList');
+  box.innerHTML = advice.map((a,i)=>`
+    <div class="advice-item">
+      <div class="num">0${i+1}</div>
+      <div class="advice-text">
+        <h4>${a.title}<span class="advice-tag">${a.tag}</span></h4>
+        <p>${a.text}</p>
+      </div>
+    </div>`).join('');
+
+  // 人生形态
+  document.getElementById('lifeTitle').textContent = '「' + T1.lifeTitle + '」';
+  document.getElementById('lifeText').innerHTML =
+    escapeHtml(T1.lifeDesc) +
+    `<span class="blend"><b>你的次主导是「${T2.name}」：</b>${escapeHtml(blend(r.top2))}</span>`;
+
+  // 张力
+  const key = [r.top1, r.top2].sort().join('|');
+  const tb = document.getElementById('tensionBox');
+  if(TENSIONS[key]){
+    tb.hidden = false;
+    tb.innerHTML = `<strong>需要留意的内在张力：${T1.name} × ${T2.name}</strong>${TENSIONS[key]}`;
+  }else{
+    tb.hidden = true;
+  }
+
+  // 供复制
+  window.__resultText = buildPlainText(r, T1, T2, LOW, advice);
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function blend(T2){
+  const map = {    A:'你会不断给自己换难度，别让「再学一点」拖住交付。',
+    B:'你会把关系里的承诺也变成结果，记得给自己留点无用时间。',
+    C:'你会用「身边有没有人」来决定去留，这既是你的护城河，也可能让你错过窗口。',
+    D:'你会给生活留出可退出的余地，记得先把钱和技能这两样攒住。',
+    E:'你会先把风险关掉再出发，这让你走得慢，但走得久。',
+    F:'你会问「这件事帮到了谁」，这会让你的选择更耐用。'
+  };
+  return map[T2] || '';
+}
+
+function renderDonut(r){
+  const svg = document.getElementById('donutSvg');
+  const cx = 100, cy = 100, rr = 72, sw = 11;
+  const C = 2 * Math.PI * rr;
+  let acc = 0;
+  let inner = `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="none" stroke="rgba(34,34,30,.07)" stroke-width="${sw}"/>`;
+  r.ranked.forEach(v=>{
+    const len = Math.max(v.pct, 0) / 100 * C;
+    const drawn = Math.max(len - 2.2, 0);
+    inner += `<circle cx="${cx}" cy="${cy}" r="${rr}" fill="none"
+      stroke="${DIMS[v.key].color}" stroke-width="${sw}"
+      stroke-dasharray="${drawn} ${C - drawn}"
+      stroke-dashoffset="${-acc}" />`;
+    acc += len;
+  });
+  svg.innerHTML = inner;
+}
+
+function buildPlainText(r, T1, T2, LOW, advice){
+  const lines = [];
+  lines.push('我的价值观罗盘');
+  lines.push('');
+  lines.push(`主导：${T1.name} ${Math.round(r.pct[r.top1])}%｜次主导：${T2.name} ${Math.round(r.pct[r.top2])}%｜最低：${LOW.name} ${Math.round(r.pct[r.low])}%`);
+  lines.push('占比：' + r.ranked.map(v=>`${DIMS[v.key].name} ${Math.round(v.pct)}%`).join(' / '));
+  lines.push('');
+  lines.push('做选择时的三条依据：');
+  advice.forEach((a,i)=>lines.push(`${i+1}. ${a.title}：${a.text}`));
+  lines.push('');
+  lines.push(`适合的人生形态：「${T1.lifeTitle}」`);
+  lines.push(T1.lifeDesc);
+  return lines.join('\n');
+}
+
+/* =======================================================================
+   交互绑定
+   ======================================================================= */
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  idx = 0;
+  locked = false;
+  showView('quiz');
+  renderQuiz();
+});
+document.getElementById('backBtn').addEventListener('click', back);
+document.getElementById('retestBtn').addEventListener('click', ()=>{
+  answers = new Array(QUESTIONS.length).fill(-1);
+  idx = 0; locked = false;
+  document.getElementById('trackBar').style.width = '0%';
+  showView('quiz');
+  renderQuiz();
+});
+document.getElementById('copyBtn').addEventListener('click', async ()=>{
+  const text = window.__resultText || '';
+  try{
+    await navigator.clipboard.writeText(text);
+    toast('已复制文字版');
+  }catch(e){
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); toast('已复制文字版'); }
+    catch(_){ toast('复制失败，可长按选择文本'); }
+    ta.remove();
+  }
+});
+
+let toastTimer;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+document.addEventListener('keydown', e=>{
+  if(currentView !== 'quiz') return;
+  const k = e.key.toLowerCase();
+  const map = {'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+  if(k in map){ e.preventDefault(); pick(map[k]); }
+  if(k === 'arrowleft' || k === 'backspace'){ e.preventDefault(); back(); }
+});
+</script>
+</body>
+</html>
